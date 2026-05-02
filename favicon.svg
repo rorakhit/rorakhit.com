@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- dark background -->
+  <rect width="32" height="32" fill="#0c0c0b"/>
+  <!-- accent border -->
+  <rect x="1" y="1" width="30" height="30" fill="none" stroke="#d4f576" stroke-width="1.5" opacity="0.35"/>
+  <!-- accent corner marks -->
+  <line x1="1" y1="1" x2="5" y2="1" stroke="#d4f576" stroke-width="1.5"/>
+  <line x1="1" y1="1" x2="1" y2="5" stroke="#d4f576" stroke-width="1.5"/>
+  <line x1="31" y1="31" x2="27" y2="31" stroke="#d4f576" stroke-width="1.5"/>
+  <line x1="31" y1="31" x2="31" y2="27" stroke="#d4f576" stroke-width="1.5"/>
+  <!-- RR text: first R full brightness, second R dimmer for depth -->
+  <text x="3" y="23" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700" fill="#d4f576">R</text>
+  <text x="14" y="23" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700" fill="#d4f576" opacity="0.55">R</text>
+</svg>
