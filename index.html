@@ -727,15 +727,231 @@
         A fan hub for women's sports — NWSL, WSL, WNBA, and PWHL — launching with a Boston Legacy tracker. Built for fans who deserve a dedicated home for their teams.
       </div>
       <div class="project-tags">
-        <span class="tag accent">Live site</span>
-        <span class="tag">Sports</span>
-        <span class="tag">NWSL</span>
-        <span class="tag">Boston Legacy</span>
+        <span class="tag accent">Astro</span>
+        <span class="tag accent">TypeScript</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Cloudflare</span>
+      </div>
+    </div>
+
+    <!-- Standd decorative scoreboard -->
+    <div class="project-card standd-board" style="justify-content:space-between;gap:0;">
+      <div class="standd-league-header">
+        <span class="standd-live-dot"></span>
+        <span class="standd-live-label">WOMEN'S SPORTS</span>
+        <span class="standd-powered">standd.fan</span>
+      </div>
+      <div class="standd-rows" id="standdRows"></div>
+      <div class="standd-footer">
+        <span class="standd-tagline">Every game. Every league. One home.</span>
+        <a href="https://standd.fan" target="_blank" class="standd-cta">Open Standd ↗</a>
       </div>
     </div>
 
   </div>
 </section>
+
+<style>
+  .standd-board {
+    background: #0a0a0a !important;
+    border-left: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+  .standd-board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(212,245,118,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .standd-league-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.5rem 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .standd-live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    animation: standd-pulse 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes standd-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); }
+    50%       { opacity: 0.4; box-shadow: none; }
+  }
+  .standd-live-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+  }
+  .standd-powered {
+    margin-left: auto;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .standd-rows {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+  .standd-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto 2.5rem auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 2rem;
+    border-bottom: 1px solid rgba(42,42,39,0.5);
+    transition: background 0.2s;
+  }
+  .standd-row:last-child { border-bottom: none; }
+  .standd-row:hover { background: rgba(212,245,118,0.02); }
+  .standd-league-badge {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .standd-team {
+    font-size: 0.78rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .standd-team.away { text-align: right; }
+  .standd-score {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    min-width: 1.2rem;
+    text-align: center;
+  }
+  .standd-sep {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .standd-status {
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+  }
+  .standd-status.live   { background: rgba(212,245,118,0.12); color: var(--accent); }
+  .standd-status.final  { color: var(--muted); }
+  .standd-status.upcoming { color: #60a5fa; }
+  .standd-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .standd-tagline {
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .standd-cta {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(212,245,118,0.3);
+    padding: 0.3rem 0.75rem;
+    transition: all 0.2s;
+  }
+  .standd-cta:hover { background: rgba(212,245,118,0.08); }
+</style>
+
+<script>
+(function() {
+  const leagues = [
+    { name: 'NWSL', color: '#f97316', borderColor: 'rgba(249,115,22,0.4)' },
+    { name: 'WNBA', color: '#f59e0b', borderColor: 'rgba(245,158,11,0.4)' },
+    { name: 'WSL',  color: '#60a5fa', borderColor: 'rgba(96,165,250,0.4)' },
+    { name: 'PWHL', color: '#a78bfa', borderColor: 'rgba(167,139,250,0.4)' },
+  ];
+
+  const fixtures = [
+    { league: 'NWSL', home: 'Boston Legacy', away: 'Portland Thorns', hs: 2, as: 1, status: 'live',     min: "73'" },
+    { league: 'WNBA', home: 'Las Vegas Aces', away: 'NY Liberty',     hs: 88, as: 91, status: 'live',   min: "Q4" },
+    { league: 'WSL',  home: 'Arsenal',        away: 'Chelsea',        hs: 1, as: 1, status: 'final',    min: 'FT' },
+    { league: 'PWHL', home: 'Boston',         away: 'Minnesota',      hs: 0, as: 0, status: 'upcoming', min: '7:00 PM' },
+  ];
+
+  const leagueMap = Object.fromEntries(leagues.map(l => [l.name, l]));
+
+  const container = document.getElementById('standdRows');
+  if (!container) return;
+
+  fixtures.forEach(f => {
+    const lg = leagueMap[f.league];
+    const row = document.createElement('div');
+    row.className = 'standd-row';
+
+    const badge = `<span class="standd-league-badge" style="color:${lg.color};border-color:${lg.borderColor}">${f.league}</span>`;
+    const statusClass = f.status === 'live' ? 'live' : f.status === 'final' ? 'final' : 'upcoming';
+    const statusEl = `<span class="standd-status ${statusClass}">${f.min}</span>`;
+
+    if (f.status === 'upcoming') {
+      row.innerHTML = `
+        ${badge}
+        <span class="standd-team">${f.home}</span>
+        <span class="standd-sep">vs</span>
+        <span class="standd-score" style="font-size:0.7rem;color:var(--muted)"></span>
+        <span class="standd-sep"></span>
+        <span class="standd-team away">${f.away}</span>
+        ${statusEl}
+      `;
+      // re-do layout for upcoming (no scores)
+      row.style.gridTemplateColumns = '3rem 1fr 2rem 1fr auto';
+      row.innerHTML = `
+        ${badge}
+        <span class="standd-team">${f.home}</span>
+        <span class="standd-sep">vs</span>
+        <span class="standd-team away">${f.away}</span>
+        ${statusEl}
+      `;
+    } else {
+      row.innerHTML = `
+        ${badge}
+        <span class="standd-team">${f.home}</span>
+        <span class="standd-score">${f.hs}</span>
+        <span class="standd-sep">–</span>
+        <span class="standd-score">${f.as}</span>
+        <span class="standd-team away">${f.away}</span>
+        ${statusEl}
+      `;
+    }
+
+    container.appendChild(row);
+  });
+
+  // tick the live scores every few seconds for fun
+  let tick = 0;
+  setInterval(() => {
+    tick++;
+    const liveRows = container.querySelectorAll('.standd-row');
+    // subtle: pulse the live dot is already handled by CSS
+  }, 3000);
+})();
+</script>
 
 <!-- SKILLS -->
 <section class="section" id="skills">
