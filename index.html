@@ -8,1035 +8,1180 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0c0c0b;
-    --surface: #141413;
-    --surface2: #1c1c1a;
-    --border: #2a2a27;
-    --accent: #d4f576;
-    --accent2: #f5a623;
-    --text: #f0ede6;
-    --muted: #7a786e;
-    --tag-bg: #1e1e1b;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 2.5rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(12,12,11,0.85);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.15rem;
-    letter-spacing: 0.01em;
-    color: var(--text);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 0 2.5rem;
-    padding-top: 5rem;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 4rem;
-  }
-
-  .hero-left { position: relative; z-index: 1; }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(3rem, 5vw, 5rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 0.85rem;
-    color: var(--muted);
-    max-width: 38ch;
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-  }
-
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: var(--accent);
-    color: #0c0c0b;
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .hero-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(212,245,118,0.25);
-  }
-
-  .hero-cta-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    font-family: 'Syne', sans-serif;
-    font-weight: 500;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    margin-left: 1rem;
-    transition: border-color 0.2s, color 0.2s;
-  }
-
-  .hero-cta-ghost:hover { border-color: var(--muted); color: var(--text); }
-
-  /* ── HERO RIGHT (stats grid) ── */
-  .hero-right {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    position: relative;
-    z-index: 1;
-  }
-
-  .stat-cell {
-    background: var(--surface);
-    padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .stat-number {
-    font-family: 'Instrument Serif', serif;
-    font-size: 2.5rem;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  .stat-number span { color: var(--accent); }
-
-  .stat-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ── SECTION ── */
-  .section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 6rem 2.5rem;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .section-num {
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-
-  h2 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(2rem, 3vw, 3rem);
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-
-  .section-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ── PROJECTS ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .project-card {
-    background: var(--surface);
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-
-  .project-card:hover { background: var(--surface2); }
-  .project-card:hover::after { transform: scaleX(1); }
-
-  .project-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .project-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    color: var(--accent);
-    background: var(--tag-bg);
-  }
-
-  .project-link {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    border: 1px solid var(--border);
-    padding: 0.3rem 0.65rem;
-    transition: all 0.2s;
-  }
-
-  .project-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .project-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-
-  .project-desc {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.75;
-    flex: 1;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: auto;
-  }
-
-  .tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
-    background: var(--tag-bg);
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .tag.accent { border-color: rgba(212,245,118,0.3); color: var(--accent); }
-
-  /* ── SKILLS ── */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .skill-group {
-    background: var(--surface);
-    padding: 2rem;
-  }
-
-  .skill-group-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-
-  .skill-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .skill-list li {
-    font-size: 0.8rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .skill-list li::before {
-    content: '→';
-    color: var(--muted);
-    font-size: 0.7rem;
-  }
-
-  /* ── CONTACT ── */
-  .contact-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .contact-left {
-    background: var(--accent);
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .contact-left h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 2rem;
-    color: #0c0c0b;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-  }
-
-  .contact-left p {
-    color: rgba(12,12,11,0.65);
-    font-size: 0.8rem;
-    line-height: 1.75;
-    max-width: 30ch;
-  }
-
-  .contact-email {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #0c0c0b;
-    color: var(--accent);
-    padding: 0.75rem 1.25rem;
-    text-decoration: none;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    margin-top: auto;
-    width: fit-content;
-    transition: opacity 0.2s;
-  }
-
-  .contact-email:hover { opacity: 0.85; }
-
-  .contact-right {
-    background: var(--surface);
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 0.8rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.2s;
-  }
-
-  .contact-link:last-child { border-bottom: none; padding-bottom: 0; }
-  .contact-link:hover { color: var(--text); }
-
-  .contact-link-icon {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-
-  .contact-link-label {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: var(--text);
-    display: block;
-    margin-bottom: 0.2rem;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 2.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-left > * {
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-eyebrow { animation-delay: 0.1s; }
-  h1            { animation-delay: 0.2s; }
-  .hero-sub     { animation-delay: 0.3s; }
-  .hero-ctas    { animation-delay: 0.4s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.25rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 6rem 1.25rem 3rem; gap: 3rem; }
-    .hero-right { grid-template-columns: 1fr 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr; }
-    .contact-block { grid-template-columns: 1fr; }
-    .section { padding: 4rem 1.25rem; }
-  }
+/* ── TOKENS ── */
+:root {
+  --bg:          #1a1410;
+  --surface:     #231c16;
+  --surface-2:   #2e251e;
+  --surface-3:   #3a2e25;
+  --tag-bg:      #2a2118;
+  --border:      #3a2e25;
+  --border-strong: #4a3c30;
+  --fg:          #f4ebde;
+  --fg-muted:    #c4b5a0;
+  --muted:       #9c8a76;
+  --muted-2:     #6e5e4d;
+  --accent:      #ff7a5c;
+  --accent-soft: rgba(255,122,92,0.12);
+  --accent-line: rgba(255,122,92,0.30);
+  --accent-glow: rgba(255,122,92,0.25);
+  --accent-ink:  #1a1410;
+  --warm:        #f0b260;
+  --warm-soft:   rgba(240,178,96,0.12);
+  --info:        #60a5fa;
+  --danger:      #fb7185;
+  --spec-orange: #f97316;
+  --spec-amber:  #f59e0b;
+  --spec-blue:   #60a5fa;
+  --spec-violet: #a78bfa;
+  --shadow-glow: 0 8px 24px rgba(255,122,92,0.25);
+  --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--noise);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── NAV ── */
+.rr-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(26,20,16,0.85);
+  backdrop-filter: blur(12px);
+}
+.rr-nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  color: var(--fg);
+  text-decoration: none;
+}
+.rr-nav-logo span { color: var(--accent); }
+.rr-nav-links { display: flex; gap: 2rem; list-style: none; }
+.rr-nav-links a,
+.rr-nav-links button {
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.rr-nav-links a:hover,
+.rr-nav-links button:hover { color: var(--fg); }
+.rr-nav-links button.active { color: var(--accent); }
+
+/* ── LAYOUT ── */
+.rr-container { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; position: relative; z-index: 1; }
+.rr-section { padding: 6rem 0; }
+
+/* ── HERO ── */
+.rr-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+}
+.rr-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+.rr-hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+.rr-h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3.5rem, 8.5vw, 8.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 2.5rem;
+  color: var(--fg);
+  font-weight: 400;
+}
+.rr-h1 em { font-style: italic; color: var(--accent); }
+.rr-hero-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 62ch;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.rr-hero-ctas { display: flex; align-items: center; gap: 1rem; }
+
+/* ── BUTTONS ── */
+.rr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.rr-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+.rr-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, color 0.2s;
+  background: transparent;
+}
+.rr-btn-ghost:hover { border-color: var(--muted); color: var(--fg); }
+
+/* ── SECTION HEADER ── */
+.rr-sh { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem; }
+.rr-sh-num { font-size: 0.68rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; }
+.rr-sh-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -0.02em; color: var(--fg); font-weight: 400; }
+.rr-sh-rule { flex: 1; height: 1px; background: var(--border); }
+.rr-sh-toggle { display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.rr-sh-toggle button {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--surface);
+  color: var(--muted);
+  border: none;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.rr-sh-toggle button.active { background: var(--accent); color: var(--accent-ink); }
+.rr-sh-toggle button:hover:not(.active) { color: var(--fg); }
+
+/* ── LINK CHIP ── */
+.rr-link-chip {
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.65rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: transparent;
+}
+.rr-link-chip:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── TAGS ── */
+.rr-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.rr-tag.accent { border-color: var(--accent-line); color: var(--accent); }
+
+/* ── CLASSIC LIST CARDS ── */
+.rr-projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.rr-project-card {
+  background: var(--surface);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+}
+.rr-project-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.rr-project-card:hover { background: var(--surface-2); }
+.rr-project-card:hover::after { transform: scaleX(1); }
+.rr-project-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.rr-project-icon {
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  background: var(--tag-bg);
+}
+.rr-project-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--fg); letter-spacing: -0.01em; }
+.rr-project-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.75; flex: 1; }
+.rr-project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+
+/* ── GALLERY CARD CHROME ── */
+.pv-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.pv-card.span-2 { grid-column: span 2; }
+.pv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+.pv-header-left { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+.pv-kind {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-soft);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.pv-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pv-header-right { display: flex; gap: 0.4rem; flex-shrink: 0; }
+.pv-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.pv-body.flush { padding: 0; }
+.pv-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  gap: 1rem;
+}
+.pv-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; max-width: 60ch; }
+
+/* ── ARCHITECTURE (Frank) ── */
+.pv-arch {
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,122,92,0.04) 0%, transparent 65%);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0 1rem;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  min-height: 280px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.pv-arch-node {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.pv-arch-node.brain { border-color: var(--accent-line); background: var(--accent-soft); }
+.pv-arch-node-icon { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
+.pv-arch-node.brain .pv-arch-node-icon { color: var(--accent); }
+.pv-arch-node-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--fg); letter-spacing: -0.01em; }
+.pv-arch-node-meta { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); line-height: 1.4; }
+.pv-arch-edge { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 1rem; }
+.pv-arch-edge .label { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+.pv-arch-row-1 { grid-row: 1; }
+.pv-arch-row-3 { grid-row: 3; }
+
+/* ── TERMINAL (DCA Bot) ── */
+.pv-term {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  background: var(--bg);
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  line-height: 1.65;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+.pv-term::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.pv-term-line { position: relative; z-index: 1; color: var(--fg-muted); white-space: pre-wrap; word-break: break-word; }
+.pv-term-line.dim  { color: var(--muted); }
+.pv-term-line.ok   { color: var(--accent); }
+.pv-term-line.warn { color: var(--warm); }
+.pv-term-line.info { color: var(--info); }
+.pv-term-line .prompt { color: var(--accent); margin-right: 0.6em; }
+.pv-term-cursor { display: inline-block; width: 7px; height: 0.85em; background: var(--accent); vertical-align: -2px; animation: pv-blink 1s steps(2) infinite; margin-left: 4px; }
+@keyframes pv-blink { to { opacity: 0; } }
+
+/* ── DEVICE / CALENDAR (BarberCal) ── */
+.pv-device {
+  padding: 1.75rem;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 1.25rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, transparent 0%, rgba(240,178,96,0.04) 100%);
+}
+.pv-device-meta { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.pv-device-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm); }
+.pv-device-headline { font-family: 'Instrument Serif', serif; font-size: 1.4rem; line-height: 1.15; color: var(--fg); letter-spacing: -0.01em; }
+.pv-device-headline em { color: var(--accent); font-style: italic; }
+.pv-device-meta p { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); line-height: 1.65; }
+.pv-cal { background: var(--surface-2); border: 1px solid var(--border); padding: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.pv-cal-head { display: flex; justify-content: space-between; align-items: center; padding: 0 0.2rem 0.25rem; border-bottom: 1px solid var(--border); }
+.pv-cal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.7rem; color: var(--fg); }
+.pv-cal-nav { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+.pv-cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.pv-cal-days span { text-align: center; padding: 2px 0; }
+.pv-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.pv-cal-cell { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--fg-muted); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--bg); position: relative; }
+.pv-cal-cell.dim { color: var(--muted-2); }
+.pv-cal-cell.booked { color: var(--accent-ink); background: var(--accent); font-weight: 700; }
+.pv-cal-cell.dot::after { content: ''; position: absolute; bottom: 2px; width: 3px; height: 3px; border-radius: 50%; background: var(--warm); }
+.pv-cal-cell.today { border: 1px solid var(--accent); }
+
+/* ── MEALS (WeeksRations) ── */
+.pv-email {
+  background: var(--bg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border);
+}
+.pv-email-head {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.pv-email-row { display: flex; align-items: baseline; gap: 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+.pv-email-row .lbl { color: var(--muted-2); width: 3.5rem; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.6rem; flex-shrink: 0; }
+.pv-email-row .val { color: var(--fg-muted); }
+.pv-meals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
+.pv-meal { background: var(--surface); padding: 0.85rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.pv-meal-day { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.pv-meal-name { font-family: 'Instrument Serif', serif; font-size: 0.95rem; color: var(--fg); line-height: 1.2; }
+.pv-meal-meta { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+/* ── STATS (FicTracker) ── */
+.pv-stats {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+.pv-stats-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); align-self: start; }
+.pv-stats-cell { background: var(--surface); padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.pv-stats-num { font-family: 'Instrument Serif', serif; font-size: 1.7rem; line-height: 1; color: var(--fg); }
+.pv-stats-num span { color: var(--accent); }
+.pv-stats-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.pv-stats-chart { background: var(--surface-2); border: 1px solid var(--border); padding: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.pv-stats-chart-head { display: flex; justify-content: space-between; align-items: center; }
+.pv-stats-chart-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.pv-stats-chart-legend { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--accent); }
+.pv-stats-bars { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; align-items: end; flex: 1; min-height: 80px; }
+.pv-stats-bar { background: var(--accent); }
+.pv-stats-bar.muted-bar { background: var(--border-strong); }
+.pv-stats-axis { display: grid; grid-template-columns: repeat(12, 1fr); font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--muted); text-align: center; letter-spacing: 0.04em; }
+
+/* ── SCOREBOARD (Standd) ── */
+.pv-board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a0a;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.pv-board::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(255,122,92,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.pv-board-rows { flex: 1; display: flex; flex-direction: column; padding: 0.5rem 0; position: relative; z-index: 1; }
+.pv-board-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto 2.5rem auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.5rem;
+  border-bottom: 1px solid rgba(58,46,37,0.5);
+}
+.pv-board-row:last-child { border-bottom: none; }
+.pv-league-badge { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.18rem 0.36rem; border: 1px solid; text-align: center; white-space: nowrap; font-family: 'Syne', sans-serif; }
+.pv-board-team { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pv-board-team.away { text-align: right; }
+.pv-board-score { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--fg); min-width: 1.2rem; text-align: center; }
+.pv-board-sep { font-size: 0.7rem; color: var(--muted); text-align: center; font-family: 'DM Mono', monospace; }
+.pv-status { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 2px; }
+.pv-status.live { background: var(--accent-soft); color: var(--accent); }
+.pv-status.final { color: var(--muted); }
+.pv-status.upcoming { color: var(--info); }
+
+/* ── SKILLS ── */
+.rr-skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.rr-skill-group { background: var(--surface); padding: 2rem; }
+.rr-skill-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+.rr-skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.rr-skill-list li { font-size: 0.8rem; color: var(--fg); display: flex; align-items: center; gap: 0.6rem; }
+.rr-skill-list li::before { content: '→'; color: var(--muted); font-size: 0.7rem; }
+
+/* ── CONTACT ── */
+.rr-contact-block { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.rr-contact-left { background: var(--accent); padding: 3rem; display: flex; flex-direction: column; gap: 1rem; }
+.rr-contact-left h3 { font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--accent-ink); letter-spacing: -0.02em; line-height: 1.15; font-weight: 400; }
+.rr-contact-left p { color: rgba(26,20,16,0.65); font-size: 0.8rem; line-height: 1.75; max-width: 30ch; }
+.rr-contact-email { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent-ink); color: var(--accent); padding: 0.75rem 1.25rem; text-decoration: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem; margin-top: auto; width: fit-content; transition: opacity 0.2s; }
+.rr-contact-email:hover { opacity: 0.85; }
+.rr-contact-right { background: var(--surface); padding: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.rr-contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--muted); font-size: 0.8rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+.rr-contact-link:last-child { border-bottom: none; padding-bottom: 0; }
+.rr-contact-link:hover { color: var(--fg); }
+.rr-contact-icon { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+.rr-contact-label { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--fg); display: block; margin-bottom: 0.2rem; }
+
+/* ── FOOTER ── */
+.rr-footer { border-top: 1px solid var(--border); padding: 1.5rem 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.06em; position: relative; z-index: 1; }
+
+/* ── HERO ANIMATIONS ── */
+@keyframes rr-fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.rr-hero > * { animation: rr-fadeUp 0.6s ease both; }
+.rr-hero-eyebrow { animation-delay: 0.05s; }
+.rr-h1           { animation-delay: 0.15s; }
+.rr-hero-sub     { animation-delay: 0.25s; }
+.rr-hero-ctas    { animation-delay: 0.35s; }
+@media (prefers-reduced-motion: reduce) { .rr-hero > * { animation: none; } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .rr-nav { padding: 1rem 1.25rem; }
+  .rr-nav-links { display: none; }
+  .rr-container { padding: 0 1.25rem; }
+  .rr-section { padding: 4rem 0; }
+  .rr-projects-grid, #gallery-grid { grid-template-columns: 1fr !important; }
+  .pv-card.span-2 { grid-column: span 1; }
+  .rr-skills-grid { grid-template-columns: 1fr; }
+  .rr-contact-block { grid-template-columns: 1fr; }
+  .pv-arch { grid-template-columns: 1fr; }
+  .pv-arch-edge { display: none; }
+  .pv-stats { grid-template-columns: 1fr; }
+  .pv-device { grid-template-columns: 1fr; }
+  .pv-meals { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo"><span>R</span>o <span>R</span>akhit</a>
-  <ul class="nav-links">
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="https://github.com/rorakhit" target="_blank">GitHub ↗</a></li>
-    <li><a href="https://linkedin.com/in/ro-rakhit" target="_blank">LinkedIn ↗</a></li>
+<!-- NAV -->
+<nav class="rr-nav">
+  <a href="#top" class="rr-nav-logo"><span>R</span>o <span>R</span>akhit</a>
+  <ul class="rr-nav-links">
+    <li><button onclick="navTo('projects')" id="nav-projects">Projects</button></li>
+    <li><button onclick="navTo('skills')" id="nav-skills">Skills</button></li>
+    <li><button onclick="navTo('contact')" id="nav-contact">Contact</button></li>
+    <li><a href="https://github.com/rorakhit" target="_blank" rel="noreferrer">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/ro-rakhit" target="_blank" rel="noreferrer">LinkedIn ↗</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Available for freelance work</div>
-    <h1>Full-stack dev.<br><em>AI-integrated</em><br>web apps.</h1>
-    <p class="hero-sub">I build complete, production-ready applications — from bank integrations to AI-powered automation — and deploy them. Real systems that do real things.</p>
-    <div class="hero-ctas">
-      <a href="#contact" class="hero-cta">Get in touch →</a>
-      <a href="https://github.com/rorakhit" target="_blank" class="hero-cta-ghost">GitHub ↗</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="stat-cell">
-      <div class="stat-number">4<span>+</span></div>
-      <div class="stat-label">Live apps deployed</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-number">3</div>
-      <div class="stat-label">AI APIs integrated</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-number">2</div>
-      <div class="stat-label">Languages</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-number">∞</div>
-      <div class="stat-label">Weekend hours spent</div>
-    </div>
-  </div>
-</section>
+<div class="rr-container">
 
-<!-- PROJECTS -->
-<section class="section" id="projects">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2>Projects</h2>
-    <div class="section-rule"></div>
-  </div>
+  <!-- HERO -->
+  <section class="rr-hero" id="top">
+    <div class="rr-hero-eyebrow">Available for freelance work</div>
+    <h1 class="rr-h1">Full-stack engineer by day.<br><em>Curious</em> after that.</h1>
+    <p class="rr-hero-sub">9 years in fintech and biotech — Go, Python, reliable APIs, high-uptime services, on-call rotations that stay quiet. The projects below started for different reasons: a tool for women's-sports fans, a local-first finance coach so my transactions stay on my machine, a fanfiction tracker that exists purely because I wanted one. They don't add up to a brand.</p>
+    <div class="rr-hero-ctas">
+      <button class="rr-btn" onclick="navTo('contact')">Get in touch →</button>
+      <a class="rr-btn-ghost" href="https://github.com/rorakhit" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </div>
+  </section>
 
-  <div class="projects-grid">
+  <!-- PROJECTS -->
+  <section class="rr-section" id="projects">
+    <div class="rr-sh">
+      <span class="rr-sh-num">01</span>
+      <h2 class="rr-sh-title">Projects</h2>
+      <div class="rr-sh-rule"></div>
+      <div class="rr-sh-toggle">
+        <button id="btn-gallery" class="active" onclick="setView('gallery')">Gallery</button>
+        <button id="btn-list" onclick="setView('list')">List</button>
+      </div>
+    </div>
 
-    <!-- GhostPaper / autobudget -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">💰</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://rorakhit-autobudget.up.railway.app/demo" target="_blank" class="project-link">Visit site ↗</a>
-          <a href="https://github.com/rorakhit/autobudget" target="_blank" class="project-link">Repo ↗</a>
+    <!-- GALLERY VIEW -->
+    <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;">
+
+      <!-- 1. Frank — Architecture -->
+      <div class="pv-card span-2">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">System diagram</span>
+            <span class="pv-name">Frank</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://github.com/rorakhit/frank" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+          </div>
+        </div>
+        <div class="pv-arch pv-body flush">
+          <div class="pv-arch-node pv-arch-row-1" style="grid-column:1">
+            <span class="pv-arch-node-icon">SCRAPE · LOCAL</span>
+            <span class="pv-arch-node-name">Playwright</span>
+            <span class="pv-arch-node-meta">Bank sessions run on the machine</span>
+          </div>
+          <div class="pv-arch-edge pv-arch-row-1" style="grid-column:2">
+            <span class="label">no cloud</span>
+            <span>→</span>
+          </div>
+          <div class="pv-arch-node pv-arch-row-1" style="grid-column:3">
+            <span class="pv-arch-node-icon">STORE · LOCAL</span>
+            <span class="pv-arch-node-name">Postgres · 14 tables</span>
+            <span class="pv-arch-node-meta">Self-hosted · credentials never leave</span>
+          </div>
+          <div class="pv-arch-edge pv-arch-row-1" style="grid-column:4">
+            <span class="label">analyze</span>
+            <span>→</span>
+          </div>
+          <div class="pv-arch-node brain pv-arch-row-1" style="grid-column:5;align-self:start">
+            <span class="pv-arch-node-icon">ANALYZER · TODAY</span>
+            <span class="pv-arch-node-name">Claude API</span>
+            <span class="pv-arch-node-meta">Prompt caching · extended thinking</span>
+          </div>
+          <div class="pv-arch-node pv-arch-row-3" style="grid-column:5;align-self:start;margin-top:0.75rem">
+            <span class="pv-arch-node-icon">ANALYZER · TOMORROW</span>
+            <span class="pv-arch-node-name">Local LLM (Ollama)</span>
+            <span class="pv-arch-node-meta">Swappable interface · zero data egress</span>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">Privacy-first personal finance coach. Bank data is scraped locally via Playwright — no Plaid, no third-party aggregator — and stored in self-hosted Postgres so credentials and transactions never leave the machine. AI spending insights via Claude today, with a swappable Analyzer interface ready to drop in a local LLM (Ollama) tomorrow.</div>
         </div>
       </div>
-      <div class="project-name">GhostPaper</div>
-      <div class="project-desc">
-        Fully automated personal finance system. Bank transactions arrive via Plaid webhooks, get categorised by Claude AI with 90-day merchant history context, and surface as real-time Gmail alerts and a live Notion dashboard — all without touching a spreadsheet.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">TypeScript</span>
-        <span class="tag accent">Claude AI</span>
-        <span class="tag">Plaid API</span>
-        <span class="tag">Supabase</span>
-        <span class="tag">Notion API</span>
-        <span class="tag">Fastify</span>
-        <span class="tag">Railway</span>
-      </div>
-    </div>
 
-    <!-- DCA Bot Dynamic -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">📈</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://dca-bot-dynamic.up.railway.app/demo" target="_blank" class="project-link">Visit site ↗</a>
-          <a href="https://github.com/rorakhit/dca-bot-dynamic" target="_blank" class="project-link">Repo ↗</a>
+      <!-- 2. DCA Bot — Terminal -->
+      <div class="pv-card span-2">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Live console log</span>
+            <span class="pv-name">AI-Assisted DCA Bot</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://dca-bot-dynamic.up.railway.app/demo" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+            <a href="https://github.com/rorakhit/dca-bot-dynamic" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+          </div>
+        </div>
+        <div class="pv-term pv-body flush" id="pv-term-lines"></div>
+        <div class="pv-footer">
+          <div class="pv-desc">AI-powered investment bot that fires bi-monthly, pulls 3-month market data, and asks Claude to dynamically adjust portfolio target weights before allocating each contribution — then emails a one-click approve/deny link before executing any live orders via Alpaca.</div>
         </div>
       </div>
-      <div class="project-name">AI-Assisted DCA Bot</div>
-      <div class="project-desc">
-        AI-powered investment bot that fires bi-monthly, pulls 3-month market data, and asks Claude to dynamically adjust portfolio target weights before allocating each contribution — then emails a one-click approve/deny link before executing any live orders via Alpaca.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">Python</span>
-        <span class="tag accent">Claude AI</span>
-        <span class="tag">Alpaca API</span>
-        <span class="tag">Scheduled jobs</span>
-        <span class="tag">Email automation</span>
-        <span class="tag">Railway</span>
-      </div>
-    </div>
 
-    <!-- BarberCal -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">✂️</div>
-        <a href="https://github.com/rorakhit" target="_blank" class="project-link">View repo ↗</a>
-      </div>
-      <div class="project-name">BarberCal</div>
-      <div class="project-desc">
-        Appointment booking system built for barbers and small service businesses. Handles scheduling, availability management, and client bookings through a clean web UI — the kind of tool small businesses usually pay $50/month for as a SaaS product.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">Booking system</span>
-        <span class="tag">Scheduling</span>
-        <span class="tag">Small business</span>
-        <span class="tag">Railway</span>
-      </div>
-    </div>
-
-    <!-- FollowFast -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">📨</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://follow-fast.up.railway.app/" target="_blank" class="project-link">Visit site ↗</a>
+      <!-- 3. BarberCal — Device -->
+      <div class="pv-card">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Product UI</span>
+            <span class="pv-name">BarberCal</span>
+          </div>
+          <div class="pv-header-right"></div>
+        </div>
+        <div class="pv-device pv-body flush">
+          <div class="pv-device-meta">
+            <span class="pv-device-eyebrow">SMB · SCHEDULING</span>
+            <div class="pv-device-headline">Booking that <em>just works</em>.</div>
+            <p>Calendar, availability, and client SMS — packaged for barbers and small service shops.</p>
+          </div>
+          <div class="pv-cal">
+            <div class="pv-cal-head">
+              <span class="pv-cal-title">April · 2026</span>
+              <span class="pv-cal-nav">‹ ›</span>
+            </div>
+            <div class="pv-cal-days">
+              <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+            </div>
+            <div class="pv-cal-grid" id="pv-cal-grid"></div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">Mobile-focused app for a barber to turn messy text-message bookings into calendar events with reminders. Built so a one-person shop can stop juggling threads and own their schedule.</div>
         </div>
       </div>
-      <div class="project-name">FollowFast</div>
-      <div class="project-desc">
-        Automated invoice follow-up tool for freelancers. CC one address on every invoice — FollowFast sends escalating payment reminder emails automatically until the client pays, with no manual chasing required.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">TypeScript</span>
-        <span class="tag accent">Claude AI</span>
-        <span class="tag">Fastify</span>
-        <span class="tag">Supabase</span>
-        <span class="tag">Stripe</span>
-        <span class="tag">Railway</span>
-      </div>
-    </div>
 
-    <!-- WeeksRations -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">🍽️</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://weeks-rations.up.railway.app/demo" target="_blank" class="project-link">Visit site ↗</a>
-          <a href="https://github.com/rorakhit/WeeksRations" target="_blank" class="project-link">Repo ↗</a>
+      <!-- 4. WeeksRations — Meals -->
+      <div class="pv-card span-2">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Weekly digest</span>
+            <span class="pv-name">WeeksRations</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://weeks-rations.up.railway.app/demo" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+            <a href="https://github.com/rorakhit/WeeksRations" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+          </div>
+        </div>
+        <div class="pv-email pv-body flush" style="border-bottom:0">
+          <div class="pv-email-head">
+            <div class="pv-email-row"><span class="lbl">From</span><span class="val">rations@weeksrations.app</span></div>
+            <div class="pv-email-row"><span class="lbl">Subject</span><span class="val" style="color:var(--fg)">Your dinner plan · week of May 25</span></div>
+          </div>
+          <div class="pv-meals">
+            <div class="pv-meal"><span class="pv-meal-day">MON</span><span class="pv-meal-name">Charred broccolini, white beans</span><span class="pv-meal-meta">30m · pantry</span></div>
+            <div class="pv-meal"><span class="pv-meal-day">TUE</span><span class="pv-meal-name">Salmon rice bowls, ginger</span><span class="pv-meal-meta">25m · 4 ingr.</span></div>
+            <div class="pv-meal"><span class="pv-meal-day">WED</span><span class="pv-meal-name">Roast chicken thighs, lemon</span><span class="pv-meal-meta">40m · oven</span></div>
+            <div class="pv-meal"><span class="pv-meal-day">THU</span><span class="pv-meal-name">Spicy noodle stir-fry</span><span class="pv-meal-meta">20m · stovetop</span></div>
+            <div class="pv-meal"><span class="pv-meal-day">FRI</span><span class="pv-meal-name">Pizza night — anything goes</span><span class="pv-meal-meta">— · leftover</span></div>
+            <div class="pv-meal"><span class="pv-meal-day">SAT</span><span class="pv-meal-name">Sheet-pan shrimp, harissa</span><span class="pv-meal-meta">30m · sheet</span></div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">AI meal planner that generates a weekly dinner plan every Sunday, emails a styled digest, and provides a web dashboard for swapping meals, substituting ingredients, and building a grocery list with one-click clipboard copy.</div>
         </div>
       </div>
-      <div class="project-name">WeeksRations</div>
-      <div class="project-desc">
-        AI meal planner that generates a weekly dinner plan every Sunday, emails a styled digest, and provides a web dashboard for swapping meals, substituting ingredients, and building a grocery list with one-click clipboard copy.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">Python</span>
-        <span class="tag accent">Claude AI</span>
-        <span class="tag">Flask</span>
-        <span class="tag">Resend</span>
-        <span class="tag">Cron scheduling</span>
-        <span class="tag">Docker</span>
-      </div>
-    </div>
 
-    <!-- fictracker -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">📚</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://fictracker.app/portfolio.html" target="_blank" class="project-link">Visit site ↗</a>
-          <a href="https://github.com/rorakhit/fictracker" target="_blank" class="project-link">Repo ↗</a>
+      <!-- 5. FicTracker — Stats -->
+      <div class="pv-card span-2">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Local dashboard</span>
+            <span class="pv-name">FicTracker</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://fictracker.app/portfolio.html" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+            <a href="https://github.com/rorakhit/fictracker" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+          </div>
+        </div>
+        <div class="pv-stats pv-body flush">
+          <div class="pv-stats-numbers">
+            <div class="pv-stats-cell"><div class="pv-stats-num">412</div><div class="pv-stats-label">Works tracked</div></div>
+            <div class="pv-stats-cell"><div class="pv-stats-num">2.1<span>M</span></div><div class="pv-stats-label">Words read</div></div>
+            <div class="pv-stats-cell"><div class="pv-stats-num">47</div><div class="pv-stats-label">Shelves</div></div>
+            <div class="pv-stats-cell"><div class="pv-stats-num">0<span>ms</span></div><div class="pv-stats-label">Server latency</div></div>
+          </div>
+          <div class="pv-stats-chart">
+            <div class="pv-stats-chart-head">
+              <span class="pv-stats-chart-title">Monthly reads · last 12 mo.</span>
+              <span class="pv-stats-chart-legend">↑ 24%</span>
+            </div>
+            <div class="pv-stats-bars" id="pv-stats-bars"></div>
+            <div class="pv-stats-axis">
+              <span>Jun</span><span></span><span>Aug</span><span></span><span>Oct</span><span></span><span>Dec</span><span></span><span>Feb</span><span></span><span>Apr</span><span></span>
+            </div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">AO3 reading tracker and analytics dashboard for fanfiction readers. Fully local-first — library, shelves, stats, reading wrapped, and a taste-based queue, all in the browser with no backend or account required. Comes with a Chrome + Firefox extension.</div>
         </div>
       </div>
-      <div class="project-name">FicTracker</div>
-      <div class="project-desc">
-        AO3 reading tracker and analytics dashboard for fanfiction readers. Fully local-first — library, shelves, stats, reading wrapped, and a taste-based queue, all in the browser with no backend or account required. Comes with a Chrome + Firefox extension.
-      </div>
-      <div class="project-tags">
-        <span class="tag accent">React 19</span>
-        <span class="tag accent">Live site</span>
-        <span class="tag">Vite</span>
-        <span class="tag">Browser extension</span>
-        <span class="tag">Local-first</span>
-        <span class="tag">Vercel</span>
-      </div>
-    </div>
 
-    <!-- Standd -->
-    <div class="project-card">
-      <div class="project-top">
-        <div class="project-icon">⚽</div>
-        <div style="display:flex;gap:0.5rem;">
-          <a href="https://standd.fan" target="_blank" class="project-link">Visit site ↗</a>
-          <a href="https://github.com/rorakhit/standd-public" target="_blank" class="project-link">Repo ↗</a>
+      <!-- 6. Standd — Scoreboard -->
+      <div class="pv-card">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Live data product</span>
+            <span class="pv-name">Standd</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://standd.fan" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+            <a href="https://github.com/rorakhit/standd-public" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+          </div>
+        </div>
+        <div class="pv-board pv-body flush">
+          <div class="pv-board-rows">
+            <div class="pv-board-row">
+              <span class="pv-league-badge" style="color:#f97316;border-color:rgba(249,115,22,0.4)">NWSL</span>
+              <span class="pv-board-team">Boston Legacy</span>
+              <span class="pv-board-score">2</span>
+              <span class="pv-board-sep">–</span>
+              <span class="pv-board-score">1</span>
+              <span class="pv-board-team away">Portland Thorns</span>
+              <span class="pv-status live">73'</span>
+            </div>
+            <div class="pv-board-row">
+              <span class="pv-league-badge" style="color:#f59e0b;border-color:rgba(245,158,11,0.4)">WNBA</span>
+              <span class="pv-board-team">Las Vegas Aces</span>
+              <span class="pv-board-score">88</span>
+              <span class="pv-board-sep">–</span>
+              <span class="pv-board-score">91</span>
+              <span class="pv-board-team away">NY Liberty</span>
+              <span class="pv-status live">Q4</span>
+            </div>
+            <div class="pv-board-row">
+              <span class="pv-league-badge" style="color:#60a5fa;border-color:rgba(96,165,250,0.4)">WSL</span>
+              <span class="pv-board-team">Arsenal</span>
+              <span class="pv-board-score">1</span>
+              <span class="pv-board-sep">–</span>
+              <span class="pv-board-score">1</span>
+              <span class="pv-board-team away">Chelsea</span>
+              <span class="pv-status final">FT</span>
+            </div>
+            <div class="pv-board-row" style="grid-template-columns:3rem 1fr 2rem 1fr auto">
+              <span class="pv-league-badge" style="color:#a78bfa;border-color:rgba(167,139,250,0.4)">PWHL</span>
+              <span class="pv-board-team">Boston</span>
+              <span class="pv-board-sep">vs</span>
+              <span class="pv-board-team away">Minnesota</span>
+              <span class="pv-status upcoming">7:00 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">A fan companion site for women's professional sports — NWSL and WNBA today, with WSL and PWHL in the works. Built from a defensive data pipeline that falls back gracefully and opens a GitHub issue when upstream breaks.</div>
         </div>
       </div>
-      <div class="project-name">Standd</div>
-      <div class="project-desc">
-        A fan hub for women's sports — NWSL, WSL, WNBA, and PWHL — launching with a Boston Legacy tracker. Built for fans who deserve a dedicated home for their teams.
+
+      <!-- 7. FollowFast — Email -->
+      <div class="pv-card">
+        <div class="pv-header">
+          <div class="pv-header-left">
+            <span class="pv-kind">Email automation</span>
+            <span class="pv-name">FollowFast</span>
+          </div>
+          <div class="pv-header-right">
+            <a href="https://follow-fast.up.railway.app/" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+          </div>
+        </div>
+        <div class="pv-email pv-body flush">
+          <div class="pv-email-head">
+            <div class="pv-email-row"><span class="lbl">From</span><span class="val">followfast@ro.dev</span></div>
+            <div class="pv-email-row"><span class="lbl">To</span><span class="val">accounts@bigclient.com</span></div>
+            <div class="pv-email-row"><span class="lbl">CC</span><span class="val">cc-me@followfast.app</span></div>
+            <div style="font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--fg);letter-spacing:-0.01em;padding-top:0.25rem;">Reminder #2 — Invoice <strong style="color:var(--accent)">INV-0421</strong> · 14 days past due</div>
+          </div>
+          <div style="padding:1rem 1.25rem;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--fg-muted);line-height:1.75;flex:1;">
+            Hi team — a friendly second nudge on <strong style="color:var(--accent);font-weight:500">INV-0421</strong> ($4,800). It was due May 13. No reply yet to my last email, so I'm following up.<br><br>
+            Happy to jump on a call if there's anything blocking.
+            <div style="display:flex;gap:1rem;margin-top:0.85rem;padding:0.75rem;border:1px dashed var(--border);background:var(--surface)">
+              <div style="display:flex;flex-direction:column;gap:0.25rem">
+                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +3</span>
+                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Gentle reminder</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.25rem">
+                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +7</span>
+                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Direct nudge</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.25rem">
+                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +14</span>
+                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Escalation</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.25rem">
+                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +21</span>
+                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Pause services</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pv-footer">
+          <div class="pv-desc">Automated invoice follow-up tool for freelancers. CC one address on every invoice — FollowFast sends escalating payment reminders automatically until the client pays.</div>
+        </div>
       </div>
-      <div class="project-tags">
-        <span class="tag accent">Astro</span>
-        <span class="tag accent">TypeScript</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">Cloudflare</span>
+
+    </div><!-- /gallery-grid -->
+
+    <!-- LIST VIEW (hidden by default) -->
+    <div id="list-grid" style="display:none">
+      <div class="rr-projects-grid">
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">🪙</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://github.com/rorakhit/frank" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">Frank</div>
+          <div class="rr-project-desc">Privacy-first personal finance coach. Bank data scraped locally via Playwright — no Plaid, no third-party aggregator — stored in self-hosted Postgres so credentials never leave the machine.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">Go</span>
+            <span class="rr-tag accent">Local-first</span>
+            <span class="rr-tag">Python</span>
+            <span class="rr-tag">Playwright</span>
+            <span class="rr-tag">PostgreSQL</span>
+            <span class="rr-tag">Claude API</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">📈</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://dca-bot-dynamic.up.railway.app/demo" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+              <a href="https://github.com/rorakhit/dca-bot-dynamic" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">AI-Assisted DCA Bot</div>
+          <div class="rr-project-desc">AI-powered investment bot that fires bi-monthly, pulls 3-month market data, and asks Claude to adjust portfolio weights before allocating each contribution — email approval gate before any live orders.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">Python</span>
+            <span class="rr-tag accent">Claude AI</span>
+            <span class="rr-tag">Alpaca API</span>
+            <span class="rr-tag">Scheduled jobs</span>
+            <span class="rr-tag">Railway</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">✂️</div>
+            <div style="display:flex;gap:0.5rem"></div>
+          </div>
+          <div class="rr-project-name">BarberCal</div>
+          <div class="rr-project-desc">Mobile-focused app for a barber to turn messy text-message bookings into calendar events with reminders. Built so a one-person shop can stop juggling threads and own their schedule.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">Mobile</span>
+            <span class="rr-tag">Scheduling</span>
+            <span class="rr-tag">Calendar sync</span>
+            <span class="rr-tag">SMS parsing</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">🍽️</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://weeks-rations.up.railway.app/demo" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+              <a href="https://github.com/rorakhit/WeeksRations" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">WeeksRations</div>
+          <div class="rr-project-desc">AI meal planner that generates a weekly dinner plan every Sunday, emails a styled digest, and provides a dashboard for swapping meals and building a grocery list with one-click copy.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">Python</span>
+            <span class="rr-tag accent">Claude AI</span>
+            <span class="rr-tag">Flask</span>
+            <span class="rr-tag">Resend</span>
+            <span class="rr-tag">Docker</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">📚</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://fictracker.app/portfolio.html" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+              <a href="https://github.com/rorakhit/fictracker" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">FicTracker</div>
+          <div class="rr-project-desc">AO3 reading tracker and analytics dashboard. Fully local-first — library, shelves, stats, reading wrapped, and a taste-based queue. Comes with Chrome + Firefox extensions.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">React 19</span>
+            <span class="rr-tag accent">Live site</span>
+            <span class="rr-tag">Vite</span>
+            <span class="rr-tag">Browser extension</span>
+            <span class="rr-tag">Vercel</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">⚽</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://standd.fan" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+              <a href="https://github.com/rorakhit/standd-public" target="_blank" rel="noreferrer" class="rr-link-chip">Repo ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">Standd</div>
+          <div class="rr-project-desc">Fan companion site for women's professional sports — NWSL, WNBA, WSL, PWHL. Built from a defensive data pipeline with graceful fallbacks and GitHub issue alerts when upstream breaks.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">Astro</span>
+            <span class="rr-tag accent">TypeScript</span>
+            <span class="rr-tag">Tailwind CSS</span>
+            <span class="rr-tag">Cloudflare</span>
+          </div>
+        </div>
+
+        <div class="rr-project-card">
+          <div class="rr-project-top">
+            <div class="rr-project-icon">📨</div>
+            <div style="display:flex;gap:0.5rem">
+              <a href="https://follow-fast.up.railway.app/" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
+            </div>
+          </div>
+          <div class="rr-project-name">FollowFast</div>
+          <div class="rr-project-desc">Automated invoice follow-up for freelancers. CC one address on every invoice — FollowFast sends escalating payment reminders automatically until the client pays. No manual chasing required.</div>
+          <div class="rr-project-tags">
+            <span class="rr-tag accent">TypeScript</span>
+            <span class="rr-tag accent">Claude AI</span>
+            <span class="rr-tag">Fastify</span>
+            <span class="rr-tag">Supabase</span>
+            <span class="rr-tag">Stripe</span>
+            <span class="rr-tag">Railway</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /list-grid -->
+  </section>
+
+  <!-- SKILLS -->
+  <section class="rr-section" id="skills">
+    <div class="rr-sh">
+      <span class="rr-sh-num">02</span>
+      <h2 class="rr-sh-title">Skills</h2>
+      <div class="rr-sh-rule"></div>
+    </div>
+    <div class="rr-skills-grid">
+      <div class="rr-skill-group">
+        <div class="rr-skill-label">Languages</div>
+        <ul class="rr-skill-list">
+          <li>TypeScript / JavaScript</li>
+          <li>Python</li>
+          <li>HTML / CSS</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="rr-skill-group">
+        <div class="rr-skill-label">Frameworks &amp; Tools</div>
+        <ul class="rr-skill-list">
+          <li>Fastify / Flask</li>
+          <li>Node.js</li>
+          <li>Docker</li>
+          <li>Vitest / unit testing</li>
+        </ul>
+      </div>
+      <div class="rr-skill-group">
+        <div class="rr-skill-label">Platforms &amp; APIs</div>
+        <ul class="rr-skill-list">
+          <li>Supabase (PostgreSQL + RLS)</li>
+          <li>Railway deployment</li>
+          <li>Anthropic / Claude AI</li>
+          <li>Plaid, Alpaca, Notion, Gmail</li>
+        </ul>
       </div>
     </div>
+  </section>
 
-    <!-- Standd decorative scoreboard -->
-    <div class="project-card standd-board" style="justify-content:space-between;gap:0;">
-      <div class="standd-league-header">
-        <span class="standd-live-dot"></span>
-        <span class="standd-live-label">WOMEN'S SPORTS</span>
-        <span class="standd-powered">standd.fan</span>
+  <!-- CONTACT -->
+  <section class="rr-section" id="contact">
+    <div class="rr-sh">
+      <span class="rr-sh-num">03</span>
+      <h2 class="rr-sh-title">Let's work together</h2>
+      <div class="rr-sh-rule"></div>
+    </div>
+    <div class="rr-contact-block">
+      <div class="rr-contact-left">
+        <h3>Got a project in mind?</h3>
+        <p>I build custom web apps, API integrations, and AI-powered tools. If you have a workflow you want automated or a product you want built, let's talk.</p>
+        <a href="mailto:ro.rakhit@gmail.com" class="rr-contact-email">ro.rakhit@gmail.com →</a>
       </div>
-      <div class="standd-rows" id="standdRows"></div>
-      <div class="standd-footer">
-        <span class="standd-tagline">Every game. Every league. One home.</span>
-        <a href="https://standd.fan" target="_blank" class="standd-cta">Open Standd ↗</a>
+      <div class="rr-contact-right">
+        <a href="https://github.com/rorakhit" target="_blank" rel="noreferrer" class="rr-contact-link">
+          <div class="rr-contact-icon">GH</div>
+          <div><span class="rr-contact-label">GitHub</span>github.com/rorakhit</div>
+        </a>
+        <a href="https://linkedin.com/in/ro-rakhit" target="_blank" rel="noreferrer" class="rr-contact-link">
+          <div class="rr-contact-icon">in</div>
+          <div><span class="rr-contact-label">LinkedIn</span>linkedin.com/in/ro-rakhit</div>
+        </a>
+        <a href="https://www.upwork.com/freelancers/~01b829c4b083181217" target="_blank" rel="noreferrer" class="rr-contact-link">
+          <div class="rr-contact-icon">UW</div>
+          <div><span class="rr-contact-label">Upwork</span>Available for freelance projects</div>
+        </a>
+        <a href="mailto:ro.rakhit@gmail.com" class="rr-contact-link">
+          <div class="rr-contact-icon">@</div>
+          <div><span class="rr-contact-label">Email</span>ro.rakhit@gmail.com</div>
+        </a>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+</div><!-- /rr-container -->
 
-<style>
-  .standd-board {
-    background: #0a0a0a !important;
-    border-left: 1px solid var(--border);
-    overflow: hidden;
-    position: relative;
-  }
-  .standd-board::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 80% 20%, rgba(212,245,118,0.04) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .standd-league-header {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 1.5rem 2rem 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .standd-live-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-    animation: standd-pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes standd-pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); }
-    50%       { opacity: 0.4; box-shadow: none; }
-  }
-  .standd-live-label {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    color: var(--accent);
-  }
-  .standd-powered {
-    margin-left: auto;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-  }
-  .standd-rows {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 0;
-  }
-  .standd-row {
-    display: grid;
-    grid-template-columns: 3rem 1fr auto 2.5rem auto 1fr;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 2rem;
-    border-bottom: 1px solid rgba(42,42,39,0.5);
-    transition: background 0.2s;
-  }
-  .standd-row:last-child { border-bottom: none; }
-  .standd-row:hover { background: rgba(212,245,118,0.02); }
-  .standd-league-badge {
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    padding: 0.2rem 0.4rem;
-    border: 1px solid;
-    text-align: center;
-    white-space: nowrap;
-  }
-  .standd-team {
-    font-size: 0.78rem;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .standd-team.away { text-align: right; }
-  .standd-score {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.1rem;
-    color: var(--text);
-    min-width: 1.2rem;
-    text-align: center;
-  }
-  .standd-sep {
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-align: center;
-  }
-  .standd-status {
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.15rem 0.4rem;
-    border-radius: 2px;
-  }
-  .standd-status.live   { background: rgba(212,245,118,0.12); color: var(--accent); }
-  .standd-status.final  { color: var(--muted); }
-  .standd-status.upcoming { color: #60a5fa; }
-  .standd-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .standd-tagline {
-    font-size: 0.68rem;
-    color: var(--muted);
-    font-style: italic;
-  }
-  .standd-cta {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-    text-decoration: none;
-    border: 1px solid rgba(212,245,118,0.3);
-    padding: 0.3rem 0.75rem;
-    transition: all 0.2s;
-  }
-  .standd-cta:hover { background: rgba(212,245,118,0.08); }
-</style>
+<footer class="rr-footer">
+  <span>© 2026 Ro Rakhit</span>
+  <span>Built with TypeScript &amp; deployed on Railway</span>
+</footer>
 
 <script>
-(function() {
-  const leagues = [
-    { name: 'NWSL', color: '#f97316', borderColor: 'rgba(249,115,22,0.4)' },
-    { name: 'WNBA', color: '#f59e0b', borderColor: 'rgba(245,158,11,0.4)' },
-    { name: 'WSL',  color: '#60a5fa', borderColor: 'rgba(96,165,250,0.4)' },
-    { name: 'PWHL', color: '#a78bfa', borderColor: 'rgba(167,139,250,0.4)' },
-  ];
+/* ── Nav smooth scroll + active section tracking ── */
+function navTo(id) {
+  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  const fixtures = [
-    { league: 'NWSL', home: 'Boston Legacy', away: 'Portland Thorns', hs: 2, as: 1, status: 'live',     min: "73'" },
-    { league: 'WNBA', home: 'Las Vegas Aces', away: 'NY Liberty',     hs: 88, as: 91, status: 'live',   min: "Q4" },
-    { league: 'WSL',  home: 'Arsenal',        away: 'Chelsea',        hs: 1, as: 1, status: 'final',    min: 'FT' },
-    { league: 'PWHL', home: 'Boston',         away: 'Minnesota',      hs: 0, as: 0, status: 'upcoming', min: '7:00 PM' },
-  ];
-
-  const leagueMap = Object.fromEntries(leagues.map(l => [l.name, l]));
-
-  const container = document.getElementById('standdRows');
-  if (!container) return;
-
-  fixtures.forEach(f => {
-    const lg = leagueMap[f.league];
-    const row = document.createElement('div');
-    row.className = 'standd-row';
-
-    const badge = `<span class="standd-league-badge" style="color:${lg.color};border-color:${lg.borderColor}">${f.league}</span>`;
-    const statusClass = f.status === 'live' ? 'live' : f.status === 'final' ? 'final' : 'upcoming';
-    const statusEl = `<span class="standd-status ${statusClass}">${f.min}</span>`;
-
-    if (f.status === 'upcoming') {
-      row.innerHTML = `
-        ${badge}
-        <span class="standd-team">${f.home}</span>
-        <span class="standd-sep">vs</span>
-        <span class="standd-score" style="font-size:0.7rem;color:var(--muted)"></span>
-        <span class="standd-sep"></span>
-        <span class="standd-team away">${f.away}</span>
-        ${statusEl}
-      `;
-      // re-do layout for upcoming (no scores)
-      row.style.gridTemplateColumns = '3rem 1fr 2rem 1fr auto';
-      row.innerHTML = `
-        ${badge}
-        <span class="standd-team">${f.home}</span>
-        <span class="standd-sep">vs</span>
-        <span class="standd-team away">${f.away}</span>
-        ${statusEl}
-      `;
-    } else {
-      row.innerHTML = `
-        ${badge}
-        <span class="standd-team">${f.home}</span>
-        <span class="standd-score">${f.hs}</span>
-        <span class="standd-sep">–</span>
-        <span class="standd-score">${f.as}</span>
-        <span class="standd-team away">${f.away}</span>
-        ${statusEl}
-      `;
+const navIds = ['projects', 'skills', 'contact'];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navIds.forEach(id => {
+        const btn = document.getElementById('nav-' + id);
+        if (btn) btn.classList.toggle('active', id === e.target.id);
+      });
     }
-
-    container.appendChild(row);
   });
+}, { rootMargin: '-40% 0px -55% 0px' });
+navIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
 
-  // tick the live scores every few seconds for fun
+/* ── View toggle ── */
+function setView(v) {
+  document.getElementById('gallery-grid').style.display = v === 'gallery' ? 'grid' : 'none';
+  document.getElementById('list-grid').style.display    = v === 'list'    ? 'block' : 'none';
+  document.getElementById('btn-gallery').classList.toggle('active', v === 'gallery');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+}
+
+/* ── Terminal typewriter ── */
+(function() {
+  const log = [
+    { c: 'dim',  t: '[2026-05-27 09:00:01] cron: scheduled run kickoff' },
+    { c: 'info', t: '  ✓ pulled 90d market data — SPY, QQQ, VTI, BND' },
+    { c: 'info', t: '  ✓ portfolio current weights = [42, 28, 18, 12]' },
+    { c: '',     t: '  → asking Claude to suggest target weights…' },
+    { c: 'ok',   t: '  ✓ Claude: [44, 30, 16, 10] — rationale: vol regime favors equity tilt' },
+    { c: 'warn', t: '  ✉ approval email sent to ro@rorakhit.com' },
+    { c: 'dim',  t: '[2026-05-27 09:00:12] waiting for human approval…' },
+    { c: 'ok',   t: '[2026-05-27 09:02:43] ✓ APPROVED via emailed link' },
+    { c: 'ok',   t: '  ✓ Alpaca: placed 4 market orders, $250 contribution' },
+    { c: 'dim',  t: '[2026-05-27 09:02:44] done. next run: 2026-06-15' },
+  ];
+  const container = document.getElementById('pv-term-lines');
   let tick = 0;
-  setInterval(() => {
+  function addLine() {
+    if (tick >= log.length) return;
+    const cursor = container.querySelector('.pv-term-cursor');
+    if (cursor) cursor.parentElement.remove();
+    const line = log[tick];
+    const div = document.createElement('div');
+    div.className = 'pv-term-line' + (line.c ? ' ' + line.c : '');
+    div.innerHTML = '<span class="prompt">$</span>' + line.t;
+    container.appendChild(div);
     tick++;
-    const liveRows = container.querySelectorAll('.standd-row');
-    // subtle: pulse the live dot is already handled by CSS
-  }, 3000);
+    if (tick < log.length) {
+      const cur = document.createElement('div');
+      cur.className = 'pv-term-line';
+      cur.innerHTML = '<span class="prompt">$</span><span class="pv-term-cursor"></span>';
+      container.appendChild(cur);
+      setTimeout(addLine, 380);
+    }
+  }
+  setTimeout(addLine, 600);
+})();
+
+/* ── Calendar grid ── */
+(function() {
+  const grid = document.getElementById('pv-cal-grid');
+  if (!grid) return;
+  const booked = [8, 14, 21];
+  const dots   = [3, 11, 17, 23, 28];
+  const today  = 14;
+  for (let i = 0; i < 35; i++) {
+    const d = i - 2;
+    const cell = document.createElement('div');
+    if (d < 1 || d > 30) {
+      cell.className = 'pv-cal-cell dim';
+    } else {
+      let cls = 'pv-cal-cell';
+      if (booked.includes(d)) cls += ' booked';
+      else if (dots.includes(d)) cls += ' dot';
+      if (d === today) cls += ' today';
+      cell.className = cls;
+      cell.textContent = d;
+    }
+    grid.appendChild(cell);
+  }
+})();
+
+/* ── Stats bars ── */
+(function() {
+  const bars = [4, 7, 6, 9, 12, 8, 11, 14, 18, 13, 16, 21];
+  const max  = Math.max(...bars);
+  const container = document.getElementById('pv-stats-bars');
+  if (!container) return;
+  bars.forEach((v, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'pv-stats-bar' + (i < 8 ? ' muted-bar' : '');
+    bar.style.height = ((v / max) * 100) + '%';
+    container.appendChild(bar);
+  });
 })();
 </script>
-
-<!-- SKILLS -->
-<section class="section" id="skills">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2>Skills</h2>
-    <div class="section-rule"></div>
-  </div>
-
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-label">Languages</div>
-      <ul class="skill-list">
-        <li>TypeScript / JavaScript</li>
-        <li>Python</li>
-        <li>HTML / CSS</li>
-        <li>SQL</li>
-      </ul>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Frameworks & Tools</div>
-      <ul class="skill-list">
-        <li>Fastify / Flask</li>
-        <li>Node.js</li>
-        <li>Docker</li>
-        <li>Vitest / unit testing</li>
-      </ul>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Platforms & APIs</div>
-      <ul class="skill-list">
-        <li>Supabase (PostgreSQL + RLS)</li>
-        <li>Railway deployment</li>
-        <li>Anthropic / Claude AI</li>
-        <li>Plaid, Alpaca, Notion, Gmail</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section" id="contact">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2>Let's work together</h2>
-    <div class="section-rule"></div>
-  </div>
-
-  <div class="contact-block">
-    <div class="contact-left">
-      <h3>Got a project in mind?</h3>
-      <p>I build custom web apps, API integrations, and AI-powered tools. If you have a workflow you want automated or a product you want built, let's talk.</p>
-      <a href="mailto:rorakhit@gmail.com" class="contact-email">rorakhit@gmail.com →</a>
-    </div>
-    <div class="contact-right">
-      <a href="https://github.com/rorakhit" target="_blank" class="contact-link">
-        <div class="contact-link-icon">GH</div>
-        <div>
-          <span class="contact-link-label">GitHub</span>
-          github.com/rorakhit
-        </div>
-      </a>
-      <a href="https://www.upwork.com/freelancers/~01b829c4b083181217" target="_blank" class="contact-link">
-        <div class="contact-link-icon">UW</div>
-        <div>
-          <span class="contact-link-label">Upwork</span>
-          Available for freelance projects
-        </div>
-      </a>
-      <a href="mailto:rorakhit@gmail.com" class="contact-link">
-        <div class="contact-link-icon">@</div>
-        <div>
-          <span class="contact-link-label">Email</span>
-          rorakhit@gmail.com
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <span>© 2026 Ro Rakhit</span>
-  <span>Built with TypeScript & deployed on Railway</span>
-</footer>
 
 </body>
 </html>
