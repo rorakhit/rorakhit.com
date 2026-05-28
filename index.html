@@ -325,7 +325,7 @@ body::before {
   border-top: 1px solid var(--border);
   gap: 1rem;
 }
-.pv-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; max-width: 60ch; }
+.pv-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
 
 /* ── ARCHITECTURE (Frank) ── */
 .pv-arch {
@@ -546,7 +546,6 @@ body::before {
   .rr-container { padding: 0 1.25rem; }
   .rr-section { padding: 4rem 0; }
   .rr-projects-grid, #gallery-grid { grid-template-columns: 1fr !important; }
-  .pv-card.span-2 { grid-column: span 1; }
   .rr-skills-grid { grid-template-columns: 1fr; }
   .rr-contact-block { grid-template-columns: 1fr; }
   .pv-arch { grid-template-columns: 1fr; }
@@ -597,10 +596,10 @@ body::before {
     </div>
 
     <!-- GALLERY VIEW -->
-    <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;">
+    <div id="gallery-grid" style="display:grid;grid-template-columns:1fr;gap:1.25rem;">
 
       <!-- 1. Frank — Architecture -->
-      <div class="pv-card span-2">
+      <div class="pv-card">
         <div class="pv-header">
           <div class="pv-header-left">
             <span class="pv-kind">System diagram</span>
@@ -646,7 +645,7 @@ body::before {
       </div>
 
       <!-- 2. DCA Bot — Terminal -->
-      <div class="pv-card span-2">
+      <div class="pv-card">
         <div class="pv-header">
           <div class="pv-header-left">
             <span class="pv-kind">Live console log</span>
@@ -695,7 +694,7 @@ body::before {
       </div>
 
       <!-- 4. WeeksRations — Meals -->
-      <div class="pv-card span-2">
+      <div class="pv-card">
         <div class="pv-header">
           <div class="pv-header-left">
             <span class="pv-kind">Weekly digest</span>
@@ -726,7 +725,7 @@ body::before {
       </div>
 
       <!-- 5. FicTracker — Stats -->
-      <div class="pv-card span-2">
+      <div class="pv-card">
         <div class="pv-header">
           <div class="pv-header-left">
             <span class="pv-kind">Local dashboard</span>
@@ -812,52 +811,6 @@ body::before {
         </div>
         <div class="pv-footer">
           <div class="pv-desc">A fan companion site for women's professional sports — NWSL and WNBA today, with WSL and PWHL in the works. Built from a defensive data pipeline that falls back gracefully and opens a GitHub issue when upstream breaks.</div>
-        </div>
-      </div>
-
-      <!-- 7. FollowFast — Email -->
-      <div class="pv-card">
-        <div class="pv-header">
-          <div class="pv-header-left">
-            <span class="pv-kind">Email automation</span>
-            <span class="pv-name">FollowFast</span>
-          </div>
-          <div class="pv-header-right">
-            <a href="https://follow-fast.up.railway.app/" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
-          </div>
-        </div>
-        <div class="pv-email pv-body flush">
-          <div class="pv-email-head">
-            <div class="pv-email-row"><span class="lbl">From</span><span class="val">followfast@ro.dev</span></div>
-            <div class="pv-email-row"><span class="lbl">To</span><span class="val">accounts@bigclient.com</span></div>
-            <div class="pv-email-row"><span class="lbl">CC</span><span class="val">cc-me@followfast.app</span></div>
-            <div style="font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--fg);letter-spacing:-0.01em;padding-top:0.25rem;">Reminder #2 — Invoice <strong style="color:var(--accent)">INV-0421</strong> · 14 days past due</div>
-          </div>
-          <div style="padding:1rem 1.25rem;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--fg-muted);line-height:1.75;flex:1;">
-            Hi team — a friendly second nudge on <strong style="color:var(--accent);font-weight:500">INV-0421</strong> ($4,800). It was due May 13. No reply yet to my last email, so I'm following up.<br><br>
-            Happy to jump on a call if there's anything blocking.
-            <div style="display:flex;gap:1rem;margin-top:0.85rem;padding:0.75rem;border:1px dashed var(--border);background:var(--surface)">
-              <div style="display:flex;flex-direction:column;gap:0.25rem">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +3</span>
-                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Gentle reminder</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:0.25rem">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +7</span>
-                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Direct nudge</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:0.25rem">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +14</span>
-                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Escalation</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:0.25rem">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--accent)">DAY +21</span>
-                <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Pause services</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pv-footer">
-          <div class="pv-desc">Automated invoice follow-up tool for freelancers. CC one address on every invoice — FollowFast sends escalating payment reminders automatically until the client pays.</div>
         </div>
       </div>
 
@@ -976,25 +929,6 @@ body::before {
           </div>
         </div>
 
-        <div class="rr-project-card">
-          <div class="rr-project-top">
-            <div class="rr-project-icon">📨</div>
-            <div style="display:flex;gap:0.5rem">
-              <a href="https://follow-fast.up.railway.app/" target="_blank" rel="noreferrer" class="rr-link-chip">Visit ↗</a>
-            </div>
-          </div>
-          <div class="rr-project-name">FollowFast</div>
-          <div class="rr-project-desc">Automated invoice follow-up for freelancers. CC one address on every invoice — FollowFast sends escalating payment reminders automatically until the client pays. No manual chasing required.</div>
-          <div class="rr-project-tags">
-            <span class="rr-tag accent">TypeScript</span>
-            <span class="rr-tag accent">Claude AI</span>
-            <span class="rr-tag">Fastify</span>
-            <span class="rr-tag">Supabase</span>
-            <span class="rr-tag">Stripe</span>
-            <span class="rr-tag">Railway</span>
-          </div>
-        </div>
-
       </div>
     </div><!-- /list-grid -->
   </section>
@@ -1010,10 +944,10 @@ body::before {
       <div class="rr-skill-group">
         <div class="rr-skill-label">Languages</div>
         <ul class="rr-skill-list">
+          <li>Go</li>
           <li>TypeScript / JavaScript</li>
           <li>Python</li>
           <li>HTML / CSS</li>
-          <li>SQL</li>
         </ul>
       </div>
       <div class="rr-skill-group">
@@ -1048,7 +982,7 @@ body::before {
       <div class="rr-contact-left">
         <h3>Got a project in mind?</h3>
         <p>I build custom web apps, API integrations, and AI-powered tools. If you have a workflow you want automated or a product you want built, let's talk.</p>
-        <a href="mailto:ro.rakhit@gmail.com" class="rr-contact-email">ro.rakhit@gmail.com →</a>
+        <a href="mailto:ro@rorakhit.com" class="rr-contact-email">ro@rorakhit.com →</a>
       </div>
       <div class="rr-contact-right">
         <a href="https://github.com/rorakhit" target="_blank" rel="noreferrer" class="rr-contact-link">
@@ -1059,13 +993,9 @@ body::before {
           <div class="rr-contact-icon">in</div>
           <div><span class="rr-contact-label">LinkedIn</span>linkedin.com/in/ro-rakhit</div>
         </a>
-        <a href="https://www.upwork.com/freelancers/~01b829c4b083181217" target="_blank" rel="noreferrer" class="rr-contact-link">
-          <div class="rr-contact-icon">UW</div>
-          <div><span class="rr-contact-label">Upwork</span>Available for freelance projects</div>
-        </a>
-        <a href="mailto:ro.rakhit@gmail.com" class="rr-contact-link">
+        <a href="mailto:ro@rorakhit.com" class="rr-contact-link">
           <div class="rr-contact-icon">@</div>
-          <div><span class="rr-contact-label">Email</span>ro.rakhit@gmail.com</div>
+          <div><span class="rr-contact-label">Email</span>ro@rorakhit.com</div>
         </a>
       </div>
     </div>
