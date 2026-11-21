@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — Ro Rakhit</title>
+<meta name="description" content="Privacy policy for rorakhit.com and Ro Rakhit's personal apps.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="/fonts/fonts.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1410;
+  --border: #3a2e25;
+  --fg: #f4ebde;
+  --fg-muted: #c4b5a0;
+  --muted: #9c8a76;
+  --accent: #ff7a5c;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 720px; margin: 0 auto; padding: 4rem 16px 3rem; }
+.back { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.06em; }
+.back:hover { color: var(--accent); }
+h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; margin: 1.5rem 0 0.25rem; line-height: 1.15; }
+.updated { color: var(--muted); font-size: 0.8rem; margin-bottom: 2.5rem; }
+h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem; margin: 2.25rem 0 0.6rem; }
+p, li { color: var(--fg-muted); }
+p + p { margin-top: 0.8rem; }
+ul { padding-left: 1.2rem; margin-top: 0.6rem; }
+li + li { margin-top: 0.4rem; }
+a { color: var(--accent); }
+footer { border-top: 1px solid var(--border); max-width: 720px; margin: 0 auto; padding: 1.5rem 16px; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← rorakhit.com</a>
+  <h1>Privacy</h1>
+  <p class="updated">Last updated 21 November 2026</p>
+
+  <h2>This website</h2>
+  <p>rorakhit.com has no accounts, forms, cookies or ads. Fonts are served from this site, not from a third party.</p>
+  <p>It uses Cloudflare Web Analytics, which counts page views without cookies and without identifying you. Visitors in the EU are excluded from it.</p>
+
+  <h2>Personal apps (ro-mail-agent and Ori)</h2>
+  <p>ro-mail-agent and Ori are apps I built for my own use. They are not offered to anyone else, and the only Google account they connect to is mine.</p>
+  <ul>
+    <li><strong>What they access:</strong> read-only access to my own Google Calendar (the <code>calendar.readonly</code> scope). They can't create, change or delete events.</li>
+    <li><strong>How the data is used:</strong> to show my schedule in my own daily briefing and to help my personal assistant notice patterns in my week.</li>
+    <li><strong>Where it's stored:</strong> on my own computer, encrypted where it's sensitive. Calendar data is processed on my own machines and isn't uploaded to outside services.</li>
+    <li><strong>Sharing:</strong> the data is never sold, shared with third parties or used for advertising. It isn't used to train AI models.</li>
+    <li><strong>Removing access:</strong> access can be revoked at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. The stored data is deleted along with the app.</li>
+  </ul>
+  <p>These apps' use of information received from Google APIs follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+
+  <h2>Contact</h2>
+  <p>Questions: <a href="mailto:ro@rorakhit.com">ro@rorakhit.com</a></p>
+</main>
+<footer>© 2026 Ro Rakhit</footer>
+</body>
+</html>
