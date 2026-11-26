@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ro Rakhit — Full-stack software developer</title>
+<meta name="description" content="Ro Rakhit is a full-stack software developer with nine years in fintech and biotech. Go and Python by day; small tools for women's sports fans, fanfic readers and personal finance after that.">
+<meta property="og:title" content="Ro Rakhit — Full-stack software developer">
+<meta property="og:description" content="Nine years in fintech and biotech. Developer by day, curious after that.">
+<meta property="og:url" content="https://rorakhit.com/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f1eee6">
+<link rel="canonical" href="https://rorakhit.com/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/anton-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/archivo-400-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root {
+  --paper: #f1eee6;
+  --paper-2: #fbfaf6;
+  --ink: #111111;
+  --ink-2: #4a4843;
+  --muted: #6b6860;
+  --grid: #e3dfd4;
+  --blue: #2b3cff;
+  --pink: #ff4f8b;
+  --yellow: #ffd23f;
+  --shadow: 8px 8px 0 var(--ink);
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --pad: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 96px 96px;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--pad); }
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+}
+.nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-block: 0.9rem; gap: 1rem; }
+.logo { font-weight: 900; font-size: 1.15rem; letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--pink); }
+.nav ul { display: flex; gap: 0.5rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; }
+.pill {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: var(--paper);
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.pill:hover { background: var(--ink); color: var(--paper); }
+.pill.hot { background: var(--pink); border-color: var(--pink); color: #fff; }
+.pill.hot:hover { background: var(--ink); border-color: var(--ink); }
+
+/* ── Hero ── */
+.hero { position: relative; padding-top: clamp(2rem, 5vw, 3.5rem); }
+.riso {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(7rem, 23vw, 19.5rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  isolation: isolate;
+  width: fit-content;
+}
+.riso .ink { display: block; mix-blend-mode: multiply; }
+.riso .ink-blue { color: var(--blue); }
+.riso .ink-pink {
+  position: absolute; inset: 0;
+  color: var(--pink);
+  transform: translate(0.03em, 0.024em);
+  animation: misregister 0.9s cubic-bezier(.2,.8,.2,1) 0.15s both;
+}
+@keyframes misregister { from { transform: translate(0, 0); } }
+
+.sticker {
+  position: absolute;
+  right: clamp(0rem, 3vw, 3rem);
+  top: clamp(2.5rem, 6vw, 5rem);
+  width: clamp(9.5rem, 17vw, 13.5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 1.25rem;
+  font-weight: 800;
+  font-size: clamp(1rem, 1.7vw, 1.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  transform: rotate(12deg);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+}
+.sticker:hover { transform: rotate(-4deg) scale(1.04); }
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+.facts div { border-top: 2px solid var(--ink); padding-top: 0.6rem; font-size: 0.95rem; }
+.label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+/* ── Section heads ── */
+.section { padding-top: clamp(4rem, 9vw, 7rem); }
+.sh { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 2px solid var(--ink); padding-bottom: 0.75rem; }
+.sh-num { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); color: var(--pink); line-height: 1; }
+.sh h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; text-transform: uppercase; color: var(--blue); }
+.sh p { margin-left: auto; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); text-align: right; }
+
+/* ── Project tiles ── */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  align-items: start;
+}
+.tile {
+  --tilt: 0deg;
+  grid-column: span 6;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow);
+  background: var(--paper-2);
+  padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 1.25rem;
+  transform: rotate(var(--tilt));
+  transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s;
+}
+.tile:hover { transform: rotate(0deg) translate(-2px, -2px); box-shadow: 11px 11px 0 var(--ink); }
+.w7 { grid-column: span 7; } .w5 { grid-column: span 5; }
+.t-blue { background: var(--blue); color: #fff; }
+.t-ink { background: var(--ink); color: var(--paper); }
+.t-yellow { background: var(--yellow); }
+.t-pink { background: var(--pink); color: #fff; }
+.tile-top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--yellow);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  padding: 0.15rem 0.5rem;
+}
+.t-yellow .tag { background: var(--paper-2); }
+.links { display: flex; gap: 0.4rem; }
+.chip {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  transition: background 0.15s, color 0.15s;
+}
+.chip:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.t-ink .chip:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.tile h3 { font-weight: 900; font-size: clamp(2.25rem, 4vw, 3.25rem); letter-spacing: -0.045em; line-height: 0.9; }
+.tile p { font-size: 0.95rem; line-height: 1.5; max-width: 52ch; }
+.t-blue p, .t-pink p { color: rgba(255,255,255,0.92); }
+.t-ink p { color: #d8d5cc; }
+
+/* mini visuals */
+.viz { font-family: var(--mono); font-size: 0.8rem; }
+.board div { display: grid; grid-template-columns: 3.2rem 1fr auto 1fr 3rem; gap: 0.6rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.25); }
+.board div:last-child { border-bottom: 0; }
+.board .lg { font-size: 0.65rem; border: 1px solid rgba(255,255,255,0.6); text-align: center; padding: 0.05rem 0; }
+.board .away { text-align: right; }
+.board .sc { font-family: var(--sans); font-weight: 900; font-size: 1.05rem; }
+.board .st { text-align: right; color: var(--yellow); }
+
+.stats { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: end; }
+.stats dl { display: grid; gap: 0.6rem; }
+.stats dt { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.stats dd { font-family: var(--sans); font-weight: 900; font-size: 1.75rem; line-height: 1; letter-spacing: -0.03em; }
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 7rem; border-bottom: 2px solid var(--ink); }
+.bars i { flex: 1; background: var(--pink); height: var(--h); transform-origin: bottom; }
+.bars i:nth-child(-n+6) { background: var(--grid); }
+
+.pipe { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0.5rem; align-items: center; }
+.pipe .node { border: 1.5px solid #5a5852; padding: 0.55rem 0.6rem; line-height: 1.3; }
+.pipe .node b { display: block; font-family: var(--sans); font-weight: 800; font-size: 0.9rem; color: #fff; }
+.pipe .node small { color: #a9a69d; font-size: 0.68rem; }
+.pipe .node.hot { border-color: var(--pink); }
+.pipe .arr { color: var(--pink); }
+
+.term { background: var(--ink); color: #d8d5cc; padding: 0.9rem 1rem; line-height: 1.7; min-height: 13.5rem; }
+.term div { white-space: pre-wrap; }
+.term.armed div { opacity: 0; }
+.term.play div { opacity: 1; transition: opacity 0.15s linear calc(var(--i) * 0.38s + 0.2s); }
+.term .ok { color: #7cf0a8; } .term .warn { color: var(--yellow); } .term .dim { color: #8a877f; } .term .info { color: #9fb0ff; }
+
+.mail { background: var(--paper-2); border: 2px solid var(--ink); }
+.mail-head { padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--ink); display: grid; gap: 0.15rem; }
+.mail-head span { color: var(--muted); }
+.mail-head b { font-weight: 500; color: var(--ink); }
+.meals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.meals div { padding: 0.6rem 0.8rem; border-right: 1px solid var(--grid); }
+.meals div:last-child { border-right: 0; }
+.meals em { font-style: normal; font-size: 0.65rem; color: var(--pink); letter-spacing: 0.06em; }
+.meals b { display: block; font-family: var(--sans); font-weight: 700; font-size: 0.95rem; line-height: 1.2; margin: 0.15rem 0; color: var(--ink); }
+.meals small { color: var(--muted); font-size: 0.7rem; }
+
+.cal { background: var(--paper-2); color: var(--ink); border: 2px solid var(--ink); padding: 0.7rem; }
+.cal-head { display: flex; justify-content: space-between; font-weight: 500; margin-bottom: 0.4rem; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; font-size: 0.7rem; }
+.cal-grid .dow { color: var(--muted); font-size: 0.6rem; }
+.cal-grid span { padding: 0.25rem 0; }
+.cal-grid .day { background: var(--paper); }
+.cal-grid .off { color: #b8b4aa; background: transparent; }
+.cal-grid .bk { background: var(--ink); color: var(--yellow); font-weight: 500; }
+.cal-grid .now { outline: 2px solid var(--pink); outline-offset: -2px; }
+
+/* ── About ── */
+.about { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.about-copy p { font-size: clamp(1.15rem, 1.8vw, 1.4rem); line-height: 1.45; letter-spacing: -0.01em; }
+.about-copy p + p { margin-top: 1rem; }
+.toolbox { border: 2px solid var(--ink); background: var(--paper-2); box-shadow: var(--shadow); transform: rotate(1deg); }
+.toolbox div { padding: 1rem 1.25rem; border-bottom: 2px solid var(--ink); }
+.toolbox div:last-child { border-bottom: 0; }
+.toolbox ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.toolbox li { font-family: var(--mono); font-size: 0.8rem; border: 1.5px solid var(--ink); border-radius: 999px; padding: 0.1rem 0.6rem; }
+
+/* ── Contact ── */
+.contact {
+  background: var(--pink); color: #fff;
+  border: 2px solid var(--ink); box-shadow: var(--shadow);
+  padding: clamp(1.75rem, 5vw, 3.5rem);
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2rem; align-items: end;
+  position: relative;
+}
+.contact h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(3.5rem, 10vw, 8rem); line-height: 0.88; }
+.contact p { font-size: 1.1rem; max-width: 38ch; margin-top: 1rem; }
+.contact-links { display: grid; gap: 0.6rem; }
+.contact-links a {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--paper-2); color: var(--ink);
+  border: 2px solid var(--ink); padding: 0.75rem 1rem;
+  text-decoration: none; font-weight: 700;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.contact-links a:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+.contact-links a span { font-family: var(--mono); font-weight: 400; font-size: 0.8rem; color: var(--muted); }
+.contact-links a.primary { background: var(--ink); color: var(--paper); }
+.contact-links a.primary span { color: var(--yellow); }
+
+/* ── Footer ── */
+.footer { margin-top: clamp(4rem, 8vw, 6rem); border-top: 2px solid var(--ink); background: var(--paper); }
+.footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-block: 1.25rem; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .sticker { position: relative; right: auto; top: auto; margin: -1rem 0 0 auto; display: grid; }
+  .hero-side { display: flex; align-items: center; gap: 1rem; justify-content: flex-end; flex-direction: row-reverse; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile, .w7, .w5 { grid-column: 1 / -1; }
+  .about, .contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .nav ul li:not(:last-child) { display: none; }
+  .tile { --tilt: 0deg !important; }
+  .board div { grid-template-columns: 2.8rem 1fr auto 1fr; }
+  .board .st { display: none; }
+  .stats { grid-template-columns: 1fr; }
+  .pipe { grid-template-columns: 1fr; }
+  .pipe .arr { transform: rotate(90deg); justify-self: center; }
+  .meals { grid-template-columns: 1fr; }
+  .meals div { border-right: 0; border-bottom: 1px solid var(--grid); }
+  .sh p { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="sr-only" href="#work">Skip to projects</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Ro Rakhit, back to top">R<span>R</span></a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a class="pill" href="#work">work</a></li>
+        <li><a class="pill" href="#about">about</a></li>
+        <li><a class="pill" href="https://github.com/rorakhit" rel="noreferrer">github</a></li>
+        <li><a class="pill hot" href="#contact">say hi ↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+
+  <section class="hero" aria-label="Introduction">
+    <h1 class="riso">
+      <span class="ink ink-blue">Ro<br>Rakhit</span>
+      <span class="ink ink-pink" aria-hidden="true">Ro<br>Rakhit</span>
+    </h1>
+    <div class="hero-side">
+      <p class="sticker">Developer by day, curious after that</p>
+    </div>
+    <div class="facts">
+      <div><span class="label">Role</span>Full-stack software developer</div>
+      <div><span class="label">Experience</span>9 years · fintech, biotech</div>
+      <div><span class="label">Mostly</span>Go, Python, TypeScript</div>
+      <div><span class="label">After hours</span>Women's sports, fanfic, money</div>
+    </div>
+  </section>
+
+  <section class="section" id="work" aria-labelledby="work-h">
+    <div class="sh">
+      <span class="sh-num">01</span>
+      <h2 id="work-h">Things I've made</h2>
+      <p>Side projects<br>2024 — 2026</p>
+    </div>
+
+    <div class="tiles">
+
+      <article class="tile t-blue w7" style="--tilt:-0.8deg">
+        <div class="tile-top">
+          <span class="tag">01 · live data product</span>
+          <div class="links">
+            <a class="chip" href="https://standd.fan" rel="noreferrer">visit ↗</a>
+            <a class="chip" href="https://github.com/rorakhit/standd-public" rel="noreferrer">repo ↗</a>
+          </div>
+        </div>
+        <div class="viz board" aria-hidden="true">
+          <div><span class="lg">NWSL</span><span>Boston Legacy</span><span class="sc">2 – 1</span><span class="away">Portland Thorns</span><span class="st">73'</span></div>
+          <div><span class="lg">WNBA</span><span>Las Vegas Aces</span><span class="sc">88 – 91</span><span class="away">NY Liberty</span><span class="st">Q4</span></div>
+          <div><span class="lg">WSL</span><span>Arsenal</span><span class="sc">1 – 1</span><span class="away">Chelsea</span><span class="st">FT</span></div>
+          <div><span class="lg">PWHL</span><span>Boston</span><span class="sc">vs</span><span class="away">Minnesota</span><span class="st">7pm</span></div>
+        </div>
+        <div>
+          <h3>Standd</h3>
+          <p>A fan companion site for women's pro sports: NWSL and WNBA today, WSL and PWHL in the works. It runs on a defensive data pipeline that falls back gracefully and opens a GitHub issue when an upstream source breaks.</p>
+        </div>
+      </article>
+
+      <article class="tile w5" style="--tilt:1.2deg">
+        <div class="tile-top">
+          <span class="tag">02 · local-first app</span>
+          <div class="links">
+            <a class="chip" href="https://fictracker.app/portfolio.html" rel="noreferrer">visit ↗</a>
+            <a class="chip" href="https://github.com/rorakhit/fictracker" rel="noreferrer">repo ↗</a>
+          </div>
+        </div>
+        <div class="viz stats" aria-hidden="true">
+          <dl>
+            <div><dt>Works</dt><dd>412</dd></div>
+            <div><dt>Words read</dt><dd>2.1M</dd></div>
+          </dl>
+          <div class="bars">
+            <i style="--h:19%"></i><i style="--h:33%"></i><i style="--h:29%"></i><i style="--h:43%"></i><i style="--h:57%"></i><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:67%"></i><i style="--h:86%"></i><i style="--h:62%"></i><i style="--h:76%"></i><i style="--h:100%"></i>
+          </div>
+        </div>
+        <div>
+          <h3>FicTracker</h3>
+          <p>An AO3 reading tracker and stats dashboard for fanfiction readers. Library, shelves, a reading wrapped and a taste-based queue, all in the browser with no account, plus Chrome and Firefox extensions.</p>
+        </div>
+      </article>
+
+      <article class="tile t-ink w5" style="--tilt:-1deg">
+        <div class="tile-top">
+          <span class="tag">03 · privacy tool</span>
+          <div class="links">
+            <a class="chip" href="https://github.com/rorakhit/frank" rel="noreferrer">repo ↗</a>
+          </div>
+        </div>
+        <div class="viz pipe" aria-hidden="true">
+          <div class="node"><b>Playwright</b><small>scrapes banks locally</small></div>
+          <span class="arr">→</span>
+          <div class="node"><b>Postgres</b><small>self-hosted</small></div>
+          <span class="arr">→</span>
+          <div class="node hot"><b>Analyzer</b><small>Claude now, Ollama next</small></div>
+        </div>
+        <div>
+          <h3>Frank</h3>
+          <p>A privacy-first personal finance coach. Bank data is scraped on my own machine and stored in self-hosted Postgres, with no Plaid or aggregator in between. The analyzer is swappable, so a local model can replace Claude.</p>
+        </div>
+      </article>
+
+      <article class="tile w7" style="--tilt:0.7deg">
+        <div class="tile-top">
+          <span class="tag">04 · scheduled bot</span>
+          <div class="links">
+            <a class="chip" href="https://github.com/rorakhit/dca-bot-dynamic" rel="noreferrer">repo ↗</a>
+          </div>
+        </div>
+        <div class="viz term" id="term" aria-hidden="true">
+          <div class="dim" style="--i:0">09:00:01 cron: scheduled run</div>
+          <div class="info" style="--i:1">  ✓ pulled 90d market data: SPY QQQ VTI BND</div>
+          <div style="--i:2">  → asking Claude for target weights…</div>
+          <div class="ok" style="--i:3">  ✓ [44, 30, 16, 10] equity tilt, low vol regime</div>
+          <div class="warn" style="--i:4">  ✉ approval email sent</div>
+          <div class="ok" style="--i:5">09:02:43 ✓ APPROVED via emailed link</div>
+          <div class="ok" style="--i:6">  ✓ Alpaca: 4 orders placed</div>
+          <div class="dim" style="--i:7">done. next run in 14 days</div>
+        </div>
+        <div>
+          <h3>DCA Bot</h3>
+          <p>An investing bot that runs twice a month, pulls three months of market data and asks Claude to adjust target weights before each contribution. Nothing trades until I click approve in an email.</p>
+        </div>
+      </article>
+
+      <article class="tile t-yellow w7" style="--tilt:-0.6deg">
+        <div class="tile-top">
+          <span class="tag">05 · weekly digest</span>
+          <div class="links">
+            <a class="chip" href="https://github.com/rorakhit/WeeksRations" rel="noreferrer">repo ↗</a>
+          </div>
+        </div>
+        <div class="viz mail" aria-hidden="true">
+          <div class="mail-head">
+            <span>from <b>rations@weeksrations.app</b></span>
+            <span>subj <b>Your dinner plan · week of May 25</b></span>
+          </div>
+          <div class="meals">
+            <div><em>MON</em><b>Charred broccolini, white beans</b><small>30m · pantry</small></div>
+            <div><em>TUE</em><b>Salmon rice bowls, ginger</b><small>25m · 4 ingr.</small></div>
+            <div><em>WED</em><b>Roast chicken thighs, lemon</b><small>40m · oven</small></div>
+          </div>
+        </div>
+        <div>
+          <h3>WeeksRations</h3>
+          <p>An AI meal planner that emails a dinner plan every Sunday, with a dashboard for swapping meals, substituting ingredients and copying the grocery list in one click.</p>
+        </div>
+      </article>
+
+      <article class="tile t-pink w5" style="--tilt:1deg">
+        <div class="tile-top">
+          <span class="tag">06 · mobile app</span>
+        </div>
+        <div class="viz cal" aria-hidden="true">
+          <div class="cal-head"><span>April 2026</span><span>‹ ›</span></div>
+          <div class="cal-grid" id="cal"></div>
+        </div>
+        <div>
+          <h3>BarberCal</h3>
+          <p>A mobile app that turns a barber's messy text-message bookings into calendar events with reminders, so a one-person shop can stop juggling threads.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" id="about" aria-labelledby="about-h">
+    <div class="sh">
+      <span class="sh-num">02</span>
+      <h2 id="about-h">About</h2>
+    </div>
+    <div class="about">
+      <div class="about-copy">
+        <p>I'm a full-stack developer. I've spent the last nine years in fintech and biotech, mostly building APIs and backend services in Go and Python.</p>
+        <p>Outside of work I build things I want to use myself, which lately means women's sports, fanfiction and personal finance.</p>
+      </div>
+      <div class="toolbox">
+        <div><span class="label">Languages</span><ul><li>Go</li><li>TypeScript</li><li>Python</li><li>SQL</li><li>HTML/CSS</li></ul></div>
+        <div><span class="label">Frameworks and tools</span><ul><li>Node.js</li><li>Fastify</li><li>Flask</li><li>Astro</li><li>React</li><li>Docker</li><li>Playwright</li><li>Vitest</li></ul></div>
+        <div><span class="label">Platforms and APIs</span><ul><li>PostgreSQL</li><li>Supabase</li><li>Cloudflare</li><li>Claude API</li><li>Alpaca</li><li>Plaid</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-h">
+    <div class="contact">
+      <div>
+        <h2 id="contact-h">Say hi</h2>
+        <p>Email is the quickest way to reach me.</p>
+      </div>
+      <div class="contact-links">
+        <a class="primary" href="mailto:ro@rorakhit.com">Email <span>ro@rorakhit.com →</span></a>
+        <a href="https://github.com/rorakhit" rel="noreferrer">GitHub <span>@rorakhit ↗</span></a>
+        <a href="https://linkedin.com/in/ro-rakhit" rel="noreferrer">LinkedIn <span>in/ro-rakhit ↗</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <span>© 2026 Ro Rakhit</span>
+    <span>Hand-written HTML, served by Cloudflare · <a href="/privacy/">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var cal = document.getElementById('cal');
+  if (!cal) return;
+  var html = 'SMTWTFS'.split('').map(function (d) { return '<span class="dow">' + d + '</span>'; }).join('');
+  var booked = [8, 14, 21, 24], today = 14;
+  for (var i = 0; i < 35; i++) {
+    var d = i - 2;
+    if (d < 1 || d > 30) { html += '<span class="off">·</span>'; continue; }
+    var cls = 'day' + (booked.indexOf(d) > -1 ? ' bk' : '') + (d === today ? ' now' : '');
+    html += '<span class="' + cls + '">' + d + '</span>';
+  }
+  cal.innerHTML = html;
+})();
+
+(function () {
+  var term = document.getElementById('term');
+  if (!term || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  term.classList.add('armed');
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    term.classList.add('play');
+    io.disconnect();
+  }, { threshold: 0.4 });
+  io.observe(term);
+})();
+</script>
+</body>
+</html>
