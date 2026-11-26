@@ -11,7 +11,9 @@ npm run dev
 
 ## Deploy
 
-Needs either `npx wrangler login` or a `CLOUDFLARE_API_TOKEN` in `.env` (gitignored).
+Cloudflare Workers Builds is connected to this repo. Pushing to `main` runs `npx wrangler deploy` (production), and other branches get a preview version via `npx wrangler versions upload`.
+
+To deploy by hand, use `npx wrangler login` or a `CLOUDFLARE_API_TOKEN` in `.env` (gitignored):
 
 ```bash
 npm run deploy
