@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-site",
+  "compatibility_date": "2026-11-26",
+  // Static site only: no Worker script, Cloudflare serves ./public directly.
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "rorakhit.com", "custom_domain": true },
+    { "pattern": "www.rorakhit.com", "custom_domain": true }
+  ],
+  "workers_dev": true,
+  "preview_urls": true
+}
